@@ -1,0 +1,70 @@
+{% load static %}
+{% csrf_token %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/169a0e69c0.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./favicon-16x16.png"
+    />
+    <link rel="manifest" href="{% static 'css/site.webmanifest' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>AIProsto</title>
+  </head>
+  <body class="active">
+    <div class="wrapper">
+      <section class="login-section active">
+        <div class="login-container">
+          <form enctype="multipart/form-data" method="post" action="{% url 'main:login' %}" class="login-form">
+            <div class="login-form-logo">
+              <img src="./logo.png" alt="logo" class="login-form-logo-image" />
+            </div>
+            <div class="login-form-body">
+              {% comment %} <input
+                name="username"
+                type="text"
+                placeholder="Введите имя пользователя"
+                class="login-form-input login-form-input-username"
+              />
+              <input
+                name="password"
+                type="password"
+                placeholder="Введите пароль"
+                class="login-form-input login-form-input-password"
+              /> {% endcomment %}
+              {% csrf_token %}
+              {{ form.username }}
+              {{ form.password }}
+              <button class="login-form-submit-button" type="submit">
+                Войти
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>

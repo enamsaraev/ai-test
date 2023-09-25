@@ -1,0 +1,242 @@
+{% load static %}
+{% csrf_token %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/169a0e69c0.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./favicon-16x16.png"
+    />
+    <link rel="manifest" href="{% static 'css/site.webmanifest' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>AIProsto</title>
+  </head>
+  <body class="active">
+    <div class="wrapper">
+      <section class="main-section active">
+        <div class="tabs-logo-row">
+          <img src="./logo.png" alt="logo" class="tabs-logo" />
+          <div class="tabs-active-user-body">
+            <div class="tabs-active-user-desc">Текущий пользователь:</div>
+            <div class="tabs-active-user-username"></div>
+            <a href="{% url 'main:logout' %}" class="tabs-active-user-logout">Выход</a>
+          </div>
+        </div>
+        <header class="header">
+          <div class="header-container">
+            <img class="header-image" src="./header.png" alt="header" />
+          </div>
+        </header>
+        <main class="tabs-section">
+          <div class="tabs-container">
+            <div class="tabs-body">
+              <div class="tabs-header">
+                <div class="tabs-tab tab-1 active">Анкета</div>
+                <div class="tabs-tab tab-2">Импорт</div>
+                <div class="tabs-tab tab-3">Экспорт</div>
+                <div class="tabs-tab tab-4">Рекомендации</div>
+              </div>
+              <div class="tabs-content">
+                <div class="tab-content tab-content-1 active">
+                  <form method="post" action="{% url 'main:application_form' %}" class="tabs-content-form profile-form">
+                    {% csrf_token %}
+                    <div class="tab-content-inputs">
+                      <div class="tab-content-input-profile-body-gender">
+                        Укажите пол
+                        <div class="tab-content-input-profile-row-gender">
+                          <label
+                            class="tab-content-input-profile-gender-label label-mars"
+                            for="gender-1"
+                            {% comment %} ><input
+                              id="gender-1"
+                              name="gender"
+                              type="radio"
+                              value="Мужчина"
+                              class="tab-content-input-profile-gender"
+                              tabindex="-1"
+                            /> {% endcomment %}
+                          >
+                            {{ application_form.gender_mars }}
+                            Мужчина
+                            </label>
+                        </div>
+                        <div class="tab-content-input-profile-row-gender">
+                          <label
+                            class="tab-content-input-profile-gender-label label-venus"
+                            for="gender-2"
+                            {% comment %} ><input
+                              id="gender-2"
+                              name="gender"
+                              type="radio"
+                              value="Женщина"
+                              class="tab-content-input-profile-gender"
+                              tabindex="-1"
+                            /> {% endcomment %}
+                          >
+                            {{ application_form.gender_venus }}
+                            Женщина
+                            </label
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="tab-content-input-profile-row tab-content-input-profile-row-surname"
+                      >
+                        {% comment %} <input
+                          placeholder="Укажите фамилию"
+                          type="text"
+                          class="tab-content-input-profile tab-content-input-profile-surname"
+                          tabindex="-1"
+                        /> {% endcomment %}
+                        {{ application_form.surname }}
+                      </div>
+                      <div
+                        class="tab-content-input-profile-row tab-content-input-profile-row-name"
+                      >
+                        {% comment %} <input
+                          placeholder="Укажите имя"
+                          type="text"
+                          class="tab-content-input-profile tab-content-input-profile-name"
+                          tabindex="-1"
+                        /> {% endcomment %}
+                        {{ application_form.name }}
+                      </div>
+                      <div
+                        class="tab-content-input-profile-row tab-content-input-profile-row-middlename"
+                      >
+                        {% comment %} <input
+                          placeholder="Укажите отчество (при наличии)"
+                          type="text"
+                          class="tab-content-input-profile tab-content-input-profile-middlename"
+                          tabindex="-1"
+                        /> {% endcomment %}
+                        {{ application_form.middlename }}
+                      </div>
+                      <div
+                        class="tab-content-input-profile-row tab-content-input-profile-row-birthdate active"
+                      >
+                        {% comment %} <input
+                          placeholder="Укажите дату рождения"
+                          type="date"
+                          class="tab-content-input-profile tab-content-input-profile-birthdate"
+                          tabindex="-1"
+                        /> {% endcomment %}
+
+                        {{ application_form.birthdate }}
+
+                      </div>
+                      <div
+                        class="tab-content-input-profile-row tab-content-input-profile-row-salary"
+                      >
+                        {% comment %} <input
+                          placeholder="Укажите сумму договора, ₽"
+                          type="number"
+                          class="tab-content-input-profile tab-content-input-profile-salary"
+                          tabindex="-1"
+                        /> {% endcomment %}
+                        {{ application_form.salary }}
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="tabs-content-form-submit-button profile-form-submit"
+                      tabindex="-1"
+                    >
+                      Отправить
+                    </button>
+                  </form>
+                </div>
+                <div class="tab-content tab-content-2">
+                  <form
+                    enctype="multipart/form-data"
+                    method="post"
+                    action="{% url 'main:import_data_form' %}"
+                    class="tabs-content-form import-form"
+                  >
+                    {% csrf_token %}
+                    {{ import_data_form.file }}
+                    {{ import_data_form.model_type }}
+                    {% comment %} <label class="tab-content-input-file-row">
+                      <input
+                        type="file"
+                        name="file"
+                        accept=".csv,.xlsx"
+                        class="tab-content-input-file"
+                        tabindex="-1"
+                      />  
+                      <span class="tab-content-input-file-button"
+                        >Выберите файл</span
+                      >
+                      <span class="tab-content-input-file-text"
+                        >допустимый формат: .csv, .xlsx</span
+                      >
+                    </label> {% endcomment %}
+                    <button
+                      type="submit"
+                      class="tabs-content-form-submit-button"
+                      tabindex="-1"
+                    >
+                      Отправить
+                    </button>
+                  </form>
+                </div>
+                <div class="tab-content tab-content-3">
+                  {% if predicted_data %}
+                      {% for item in predicted_data %}
+                        <p>{{ item.0 }}</p>
+                      {% endfor %}
+                  {% else %}
+                  Пустое нечто
+                  {% endif %}
+                </div>
+                <div class="tab-content tab-content-4">
+				<p>Наш дашборд, данные из которого использовались в исследовании <a href='https://datalens.yandex/mq8j47zb5eoeb' target='blank'>Дашборд</a>
+				<p>Мы провели небольшое исследование, с результатами которого Вы можете ознакомится по <a href='research.pdf' target='_blank'>ссылке. </a></p>
+
+<p>
+Самое важное:<br>
+1)	У вас присутствует аномалия в поведении клиентов, а именно повышенная активность/конверсия в субботу. Это нетипично в целом для всех отраслей и, в том числе, для отрасли недвижимости. Возможно, этот вопрос стоит исследовать лучше и понять в чём причина. <br>
+2)	Присутствует значительная разница в конверсии между 2022 годом и 2021 с 2023. Мы вынесли гипотезу, что в 2022 проводилась какая-то кампания, либо использовались инструменты маркетинга, которые позволили поднять показатели. Возможно, для повышения конверсии, стоит снова воспользоваться этими инструментами.<br>
+3)	Следует ужесточить правила сбор информации. Некоторые признаки являются ключевыми для моделей и пропущенные значения в них могут сильно сказаться на предсказательной силе модели. Что можно использовать? Во-первых, двойная верификация. Пользователь, если регистрируется где-либо в Вашей инфраструктуре, должен дважды подтвердить своё желание. Тут могут возникнуть споры на тему того, что такое может отпугнуть пользователей, но исследования говорят о том, что это позволяет качественно отобрать клиентов. Качество == лучшее предсказание модели. Также стоит добавить обязательные для заполнения поля, в тех каналах сбора информации, где пользователь сам вносит информацию о себе.<br>
+4)	Мы в своём исследовании отметили важный фактор – подавляющее число клиентов принимают решение о покупки дополнительных услуг ещё до заключения сделки, т.е. большинство клиентов приобретают машиноместо в первый же месяц трекинга в Вашей системе. Как это можно использовать? Сейчас Вы используете наш продукт с возможностью внесения данных о пользователе через анкету. Возможно, ещё на этапе первых звонков, а мы также заметили, что большинство пользователей уходят из системы как только получают номер телефона, можно внести данные о клиенте в нашу модель и уже понять, как с ним работать. Не ждать пока клиент сам сделает выбор, а помочь ему и направить.<br>
+5)	Одна из ключевых особенностей нашей модели, которая позволила вывести показатели на практически 100% результаты – это кластеризация пользователей. Лучше всего отображают Ваших пользователей 3 кластера. Мы объяснили бы эти кластеры и расписали бы типичного представителя каждого класса, но у нас нет легенды. Вы можете провести эту работу самостоятельно и, смотрите пункт выше, ещё на этапе первого контакта с пользователем – уже понимать, стоит ли тратить ресурсы кампании на то, чтобы попытаться привлечь клиента к покупке дополнительных услуг.<br>
+6)	Если клиент трекнулся в Вашей системе больше 6 раз и не приобрел дополнительных услуг, дальнейшие траты ресурсов кампании на попытки привлечь клиента нецелесообразны. Если бы у нас были данные по другим продуктам, а не только машиноместо, мы могли бы настроить нашу модель так, чтобы сказать «сейчас мы оставляем клиента в покое, а вот через 2 года вернёмся к нему с предложением вот этого». Нужно больше данных и легенда.<br>
+7)	У Вас хорошие показатели по email-рассылке 3.65% (на 0.05% выше, чем в среднем по отрасли), однако общая конверсия по всем каналам рекламы ниже на 0.65%, чем в целом по отрасли. Возможно, с другими каналами рекламы требуется регулирование.<br>
+</p>
+
+				
+				
+				
+				
+				        </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </section>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>
