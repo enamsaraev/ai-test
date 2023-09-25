@@ -18,16 +18,16 @@ class ApplicationHelper:
     data: dict
     user: User
 
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
+    def __call__(self, *args: Any, **kwds: Any) -> ApplicationData:
         self._normilize_data()
         return self._save_form()
     
-    def _normilize_data(self):
+    def _normilize_data(self) -> None:
         self.data['gender'] = self.data['gender_mars'] if self.data['gender_mars'] else self.data['gender_venus']
         self.data.pop('gender_mars')
         self.data.pop('gender_venus')
 
-    def _save_form(self):
+    def _save_form(self) -> ApplicationData:
         return ApplicationData.objects.create(user=self.user ,**self.data)
     
 
@@ -36,10 +36,10 @@ class ImportDataHelper:
     data: dict
     user: User
 
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
+    def __call__(self, *args: Any, **kwds: Any) -> ImportData:
         return self._save_form()
     
-    def _save_form(self):
+    def _save_form(self) -> ImportData:
         return ImportData.objects.create(user=self.user, **self.data)
     
 
@@ -47,7 +47,7 @@ class ImportDataHelper:
 class AIModel:
     import_file: ImportData
 
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
+    def __call__(self, *args: Any, **kwds: Any) -> None:
         result = ModelEmulation(file=self.import_file.file)()
         if result:
             with open('file_to_save.csv', mode='rb') as f:
@@ -58,7 +58,7 @@ class AIModel:
 class PredictedModelHelper:
     user: User
 
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
+    def __call__(self, *args: Any, **kwds: Any) -> list:
         obj = self._get_predicted_data()
         if not obj:
             return False
@@ -69,10 +69,10 @@ class PredictedModelHelper:
 
         return self._parse_data(df=df)
     
-    def _get_predicted_data(self):
+    def _get_predicted_data(self) -> PredictData:
         return PredictData.objects.filter(import_data__user=self.user).last()
     
-    def _read_file(self, obj: PredictData):
+    def _read_file(self, obj: PredictData) -> pd.DataFrame:
         try:
             data = pd.read_csv(f'media/{obj.file}')
 
@@ -83,7 +83,7 @@ class PredictedModelHelper:
         df = pd.DataFrame(data=data)
         return df
     
-    def _parse_data(self, df: pd.DataFrame):
+    def _parse_data(self, df: pd.DataFrame) -> list:
         parsed_data = []
         for _, row in df.iterrows():
             parsed_data.append(row.values.flatten().tolist())
