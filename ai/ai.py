@@ -8,7 +8,7 @@ if mini:
 else:
   model = email_model() # создаём объект
 
-data = pd.read_csv('ai/datas/clasters.csv') # загрузка не через sql
+data = pd.read_csv('ai/datas/clusters1.csv') # загрузка не через sql
 
 # data = pd.read_sql_table('table_name', engine) # загрузка через sql
 
