@@ -15,19 +15,19 @@
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="./apple-touch-icon.png"
+      href="{% static 'img/apple-touch-icon.png' %}"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="./favicon-32x32.png"
+      href="{% static 'img/favicon-32x32.png' %}"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="./favicon-16x16.png"
+      href="{% static 'img/favicon-16x16.png' %}"
     />
     <link rel="manifest" href="{% static 'css/site.webmanifest' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
@@ -35,18 +35,22 @@
   </head>
   <body class="active">
     <div class="wrapper">
+      <section class="login-section">
+        <div class="login-container">
+        </div>
+      </section>
       <section class="main-section active">
         <div class="tabs-logo-row">
-          <img src="./logo.png" alt="logo" class="tabs-logo" />
+          <img src="{% static 'img/logo.png' %}" alt="logo" class="tabs-logo" />
           <div class="tabs-active-user-body">
-            <div class="tabs-active-user-desc">Текущий пользователь:</div>
+            <div class="tabs-active-user-desc">Текущий пользователь: {{ user.username }}</div>
             <div class="tabs-active-user-username"></div>
             <a href="{% url 'main:logout' %}" class="tabs-active-user-logout">Выход</a>
           </div>
         </div>
         <header class="header">
           <div class="header-container">
-            <img class="header-image" src="./header.png" alt="header" />
+            <img class="header-image" src="{% static 'img/header.png' %}" alt="header" />
           </div>
         </header>
         <main class="tabs-section">

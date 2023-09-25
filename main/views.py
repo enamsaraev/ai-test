@@ -9,6 +9,7 @@ from main.helpers import ApplicationHelper, ImportDataHelper, AIModel, Predicted
 class MainPageView(View):
     def get(self, request, *args, **kwargs):
         ctx = {
+            'user': request.user,
             'application_form': ApplicationForm(),
             'import_data_form': ImportDataForm(),
         }
@@ -18,6 +19,7 @@ class MainPageView(View):
 class MainPagePredictedView(View):
     def get(self, request, *args, **kwargs):
         ctx = {
+            'user': request.user,
             'application_form': ApplicationForm(),
             'import_data_form': ImportDataForm(),
             'predicted_data': PredictedModelHelper(request.user)()
