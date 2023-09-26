@@ -8,6 +8,9 @@ from typing import Any
 
 @dataclass
 class ModelEmulation:
+    types_of_model = {
+        
+    }
     file: str
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
