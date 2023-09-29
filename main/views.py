@@ -69,7 +69,13 @@ class ImportDataView(View):
         form = ImportDataForm(request.POST, request.FILES)
         if form.is_valid():
             import_file = ImportDataHelper(data=form.cleaned_data, user=request.user)()
-            AIModel(import_file=import_file)()
-        return redirect('main:predicted_main')
+            predict_data_model = AIModel(import_file=import_file)()
+            ctx = {
+                'user': request.user,
+                'application_form': ApplicationForm(),
+                'import_data_form': ImportDataForm(),
+                'predicted_data': PredictedModelHelper(predict_data_id=predict_data_model.id)() if predict_data_model else None
+            }
+        return render(request, 'index.html', context=ctx)
     
 

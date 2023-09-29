@@ -48,15 +48,15 @@ class AIModel:
     import_file: ImportData
 
     def __call__(self, *args: Any, **kwds: Any) -> None:
-        result = ModelEmulation(file=self.import_file.file)()
+        result = ModelEmulation(file=self.import_file.file, form_type=self.import_file.model_type)()
         if result:
             with open('file_to_save.csv', mode='rb') as f:
-                PredictData.objects.create(import_data=self.import_file, file=File(f, name=f'predicted-{self.import_file.file}'))
+                return PredictData.objects.create(import_data=self.import_file, file=File(f, name=f'predicted{self.import_file.file}'))
 
 
 @dataclass
 class PredictedModelHelper:
-    user: User
+    predict_data_id: int
 
     def __call__(self, *args: Any, **kwds: Any) -> list:
         obj = self._get_predicted_data()
@@ -70,7 +70,7 @@ class PredictedModelHelper:
         return self._parse_data(df=df)
     
     def _get_predicted_data(self) -> PredictData:
-        return PredictData.objects.filter(import_data__user=self.user).last()
+        return PredictData.objects.filter(id=self.predict_data_id).last()
     
     def _read_file(self, obj: PredictData) -> pd.DataFrame:
         try:
@@ -85,7 +85,7 @@ class PredictedModelHelper:
     
     def _parse_data(self, df: pd.DataFrame) -> list:
         parsed_data = []
-        for _, row in df.iterrows():
+        for _, row in df.head().iterrows():
             parsed_data.append(row.values.flatten().tolist())
         
         return parsed_data

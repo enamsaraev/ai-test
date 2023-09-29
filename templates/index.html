@@ -209,7 +209,7 @@
                 <div class="tab-content tab-content-3">
                   {% if predicted_data %}
                       {% for item in predicted_data %}
-                        <p>{{ item.0 }}</p>
+                          <p> {{ item.0 }}{{ item.1 }} </p>
                       {% endfor %}
                   {% else %}
                   Пустое нечто
