@@ -1,6 +1,11 @@
 #                                         пример работы с этим классом
 from model_class import *
 # from sklearn.metrics import roc_auc_score
+
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 mini = False
 
 if mini:
@@ -8,7 +13,7 @@ if mini:
 else:
   model = email_model() # создаём объект
 
-data = pd.read_csv('ai/datas/clusters1.csv') # загрузка не через sql
+data = pd.read_csv(os.path.join(BASE_DIR, 'ai/datas/clusters.csv')) # загрузка не через sql
 
 # data = pd.read_sql_table('table_name', engine) # загрузка через sql
 
@@ -16,7 +21,8 @@ model_pred = model.predict(data) # получаем предикт
 
 print("_"*100)
 print('датасет после обработки:')
-print(model.data.head())
+# print(model.data.head())
+print(model_pred[0:5])
 
 model.save_pred() # сохраняем его
 
